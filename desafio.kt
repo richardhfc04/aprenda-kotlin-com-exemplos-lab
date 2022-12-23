@@ -1,21 +1,34 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+data class Usuario (val nome: String)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(val nome: String, val duracao: Int = 60, val level: Nivel)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>, val level: Nivel) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add (usuario)
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val ListaCont = listOf<ConteudoEducacional>(
+    ConteudoEducacional("Java",60, Nivel.DIFICIL),
+    ConteudoEducacional("JS",50, Nivel.INTERMEDIARIO),
+    ConteudoEducacional("Python",45, Nivel.BASICO),
+    )
+    val Curso = Formacao ("Kotlin",ListaCont, Nivel.DIFICIL)
+
+    Curso.matricular(Usuario("Filipe"))
+
+    println("Curso ${Curso.nome} de nivel ${Curso.level}")
+    Curso.inscritos.forEach {
+        println("${it.nome} está matriculado no curso de ${Curso.nome}, ele vai aprender:")
+    }
+    Curso.conteudos.forEach{
+        println(" ${it.nome}, com duração de ${it.duracao}  minutos, de nivel ${it.level}")
+    }
+
 }
